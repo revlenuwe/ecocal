@@ -1,0 +1,83 @@
+{block content}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="iq-card">
+                <div class="iq-card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="text-center text-secondary" scope="col">
+                                    Data
+                                </th>
+                                <th class="text-center" scope="col">
+                                    <button id="pList" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Product #1
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="pList">
+                                        <a class="dropdown-item" n:foreach="$products as $it" href="#" onclick="showProduct($(this))" data-id="{$iterator}" >Product #{$iterator}</a>
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                            {foreach $products as $it}
+                            <tbody class="d-none product product-{$iterator}">
+                            <tr>
+                                <th class="text-center" scope="row">Str. Material</th>
+                                <td class="text-center" id="c-material">{$it->straight_material |number:2}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center" scope="row">Str. Salary</th>
+                                <td class="text-center" id="c-salary">{$it->straight_salary |number:2}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center" scope="row">MO</th>
+                                <td class="text-center" id="c-mo">{$it->straight_mo |number:2}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center" scope="row">All MO</th>
+                                <td class="text-center" id="c-all-mo">{$it->straight_material + $it->straight_salary + $it->straight_mo |number:2}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center" scope="row">AO</th>
+                                <td class="text-center" id="c-ao">{$calculation->ao |number:2}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center" scope="row">All AO & MO</th>
+                                <td class="text-center" id="c-all-o">{$it->straight_material + $it->straight_salary + $calculation->mo + $calculation->ao |number:2}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center" scope="row">SO</th>
+                                <td class="text-center" id="c-so">{$calculation->so |number:2}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center" scope="row">All costs</th>
+                                <td class="text-center" id="c-all">{$calculation->so + $it->straight_material + $it->straight_salary + $calculation->mo + $calculation->ao |number:2}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center" scope="row">Profit</th>
+                                <td class="text-center" id="c-profit">{$calculation->so + $it->straight_material + $it->straight_salary + $calculation->mo + $calculation->ao |number:2}</td>
+                            </tr>
+                            </tbody>
+                            {/foreach}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}
+{block scripts}
+    <script>
+        $(function (){
+            $('.product-1').removeClass('d-none');
+        });
+
+        function showProduct(el){
+            $('.product').addClass('d-none')
+            $('.product-' + el.data('id')).removeClass('d-none')
+
+            $('#pList').text('Product #' + el.data('id'))
+        }
+    </script>
+{/block}

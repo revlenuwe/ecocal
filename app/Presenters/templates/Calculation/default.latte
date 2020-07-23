@@ -1,0 +1,123 @@
+{block content}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="iq-card">
+                <div class="iq-card-header d-flex justify-content-between">
+                    <div class="iq-header-title">
+                        <h4 class="card-title">Calculation</h4>
+                    </div>
+                </div>
+                <div class="iq-card-body">
+                    <form n:name=calculationForm>
+
+                        <div class="form-group">
+                            <label for="">Material</label>
+                            <input n:name=material type="text" class="sum-inp form-control" required>
+                            <span>{inputError material}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Salary</label>
+                            <input n:name=salary type="text" class="sum-inp form-control" required>
+                            <span>{inputError salary}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="">MO
+                                <button type="button" class="btn btn-sm" data-toggle="tooltip" data-placement="right"  data-original-title="Sales Overhead">
+                                    <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                </button>
+                            </label>
+                            <input n:name=mo type="text" class="sum-inp form-control" required>
+                            <span>{inputError mo}</span>
+                        </div>
+                        <div class="form-group sw-or">
+                            <div class="custom-control custom-switch custom-switch-icon custom-switch-color custom-control-inline mb-2">
+                                <div class="custom-switch-inner text-left">
+                                    <p class="mb-0">
+                                        SO
+                                        <button type="button" class="btn btn-sm" data-toggle="tooltip" data-placement="right"  data-original-title="Sales Overhead">
+                                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                        </button>
+                                    </p>
+                                    <input type="checkbox" class="custom-control-input bg-success sw-plus" id="sw-or">
+                                    <label class="custom-control-label" for="sw-or">
+                                        <span class="switch-icon-left top-4"><i class="fa fa-check"></i></span>
+                                        <span class="switch-icon-right top-4"><i class="fa fa-check"></i></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <input type="text" n:name=so id="sw-or-dynamic" class="sum-inp form-control" style="display: none">
+                        </div>
+                        <div class="form-group sw-sr">
+                            <div class="custom-control custom-switch custom-switch-icon custom-switch-color custom-control-inline mb-2">
+                                <div class="custom-switch-inner text-left">
+                                    <p class="mb-0">
+                                        AO
+                                        <button type="button" class="btn btn-sm" data-toggle="tooltip" data-placement="right"  data-original-title="Administrative Overhead">
+                                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                        </button>
+                                    </p>
+
+                                    <input type="checkbox" class="custom-control-input bg-success sw-plus" id="sw-sr">
+                                    <label class="custom-control-label" for="sw-sr">
+                                        <span class="switch-icon-left top-4"><i class="fa fa-check"></i></span>
+                                        <span class="switch-icon-right top-4"><i class="fa fa-check"></i></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <input type="text" n:name=ao id="sw-sr-dynamic" class="sum-inp form-control" style="display: none">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Products Count</label>
+                            <input type="text" n:name=products_count class="count-inp form-control" required>
+                            <span>{inputError products_count}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Profit</label>
+                            <input type="text" n:name=profit  class="percent-inp form-control">
+                            <span>{inputError profit}</span>
+                        </div>
+                        <button n:name=submit type="submit" class="btn btn-success">Submit</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}
+{block scripts}
+    <script>
+        $(document).ready(function(){
+            $('.sum-inp').inputmask("currency",{
+                allowMinus: false
+            });
+            $('.count-inp').inputmask("integer",{
+                rightAlign: false,
+                allowMinus: false
+            });
+            $('.percent-inp').inputmask("percentage",{
+                rightAlign: false,
+            });
+        });
+
+
+        $(document).ready(function(){
+            $('.sw-plus').click(function(){
+                var input = $('#' + $(this).attr('id') + '-dynamic');
+                if($(this).is(":checked")){
+                    input.attr('name',$(this).attr('id'))
+                    input.fadeIn()
+                    // $('<input>').attr({
+                    //     id: $(this).attr('id') + '-dynamic',
+                    //     name: $(this).attr('id'),
+                    //     class: "form-control sum-inp"
+                    // }).appendTo('.' + $(this).attr('id'));
+                }
+                else if($(this).is(":not(:checked)")){
+                    input.attr('name','');
+                    input.fadeOut();
+                }
+            });
+        });
+    </script>
+
+{/block}
